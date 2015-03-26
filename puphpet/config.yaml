@@ -4,7 +4,7 @@ vagrantfile-local:
         box: puphpet/ubuntu1404-x64
         box_url: puphpet/ubuntu1404-x64
         hostname: 'kunstmaancms'
-        memory: '512'
+        memory: '1024'
         cpus: '2'
         chosen_provider: virtualbox
         network:
@@ -88,7 +88,7 @@ apache:
             servername: kunstmaan.cms
             serveraliases:
                 - www.kunstmaan.cms
-            docroot: /var/www/myprojectname
+            docroot: /var/www/myprojectname/web
             port: '80'
             setenv:
                 - 'APP_ENV dev'
@@ -129,7 +129,7 @@ nginx:
             server_name: kunstmaan.cms
             server_aliases:
                 - www.kunstmaan.cms
-            www_root: /var/www/kunstmaancms
+            www_root: /var/www/kunstmaancms/web
             listen_port: '80'
             index_files:
                 - index.html
@@ -175,9 +175,13 @@ php:
             - cli
             - intl
             - mcrypt
+            - curl
+            - imagick
+            - gd
         pear: {  }
         pecl:
             - pecl_http
+            - apcu
     ini:
         display_errors: On
         error_reporting: '-1'
