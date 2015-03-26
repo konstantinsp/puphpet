@@ -231,15 +231,15 @@ mysql:
     adminer: '1'
     users:
         B9OLZJJ9l0Hm:
-            name: mydatabaseusername
-            password: mydatabasepassword
+            name: mydbuser
+            password: mydbpass
     databases:
         auBf0jibiszs:
-            name: mydatabasename
+            name: mydbname
             sql: ''
     grants:
         us8Ts2byfHuF:
-            user: mydatabaseusername
+            user: mydbuser
             table: '*.*'
             privileges:
                 - ALL
