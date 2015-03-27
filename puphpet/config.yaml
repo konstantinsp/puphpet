@@ -8,7 +8,7 @@ vagrantfile-local:
         cpus: '2'
         chosen_provider: virtualbox
         network:
-            private_network: 33.33.33.33
+            private_network: 172.31.32.2
             forwarded_port: {  }
         post_up_message: ''
         provider:
