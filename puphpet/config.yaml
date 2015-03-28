@@ -3,7 +3,7 @@ vagrantfile-local:
     vm:
         box: puphpet/ubuntu1404-x64
         box_url: puphpet/ubuntu1404-x64
-        hostname: 'kunstmaancms'
+        hostname: kunstmaancms
         memory: '1024'
         cpus: '2'
         chosen_provider: virtualbox
@@ -29,7 +29,7 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            9Ai8Lw8HPsy6:
+            eL3J29Pni02L:
                 owner: www-data
                 group: www-data
                 source: ./
@@ -60,7 +60,10 @@ vagrantfile-local:
         host: detect
 server:
     install: '1'
-    packages: {  }
+    packages:
+        - vim
+        - htop
+        - memcached
 users_groups:
     install: '1'
     groups: {  }
@@ -84,7 +87,7 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        mdvbkuzpzwte:
+        d2wndcy7blwm:
             servername: kunstmaan.cms
             serveraliases:
                 - www.kunstmaan.cms
@@ -94,7 +97,7 @@ apache:
                 - 'APP_ENV dev'
             custom_fragment: ''
             directories:
-                pwzzpzw4vykr:
+                tjrd7v5r6lwe:
                     provider: directory
                     path: /var/www/myprojectname/web
                     options:
@@ -107,7 +110,7 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        7vaxy4pfdzvv:
+                        lwnqdywkn3ry:
                             provider: filesmatch
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
@@ -124,7 +127,7 @@ nginx:
         proxy_buffers: '4 256k'
     upstreams: {  }
     vhosts:
-        dmydlosuje9k:
+        skvtmdhldzag:
             proxy: ''
             server_name: kunstmaan.cms
             server_aliases:
@@ -137,7 +140,7 @@ nginx:
                 - index.php
             client_max_body_size: 1m
             locations:
-                gj4ufvnetqke:
+                kw4shvjztncn:
                     location: /
                     try_files:
                         - $uri
@@ -146,7 +149,7 @@ nginx:
                     fastcgi: ''
                     fastcgi_index: ''
                     fastcgi_split_path: ''
-                nam8xangmrc1:
+                l5plg4wml3um:
                     location: '~ \.php$'
                     try_files:
                         - $uri
@@ -178,6 +181,7 @@ php:
             - curl
             - imagick
             - gd
+            - memcached
         pear: {  }
         pecl:
             - pecl_http
@@ -234,15 +238,15 @@ mysql:
         override_options: {  }
     adminer: '1'
     users:
-        B9OLZJJ9l0Hm:
+        twJSaEBRDnG6:
             name: mydbuser
             password: mydbpass
     databases:
-        auBf0jibiszs:
+        OzsfNR0ffckJ:
             name: mydbname
             sql: ''
     grants:
-        us8Ts2byfHuF:
+        rrzlYzgzF3OR:
             user: mydbuser
             table: '*.*'
             privileges:
