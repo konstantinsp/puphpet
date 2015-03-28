@@ -64,6 +64,8 @@ server:
         - vim
         - htop
         - memcached
+        - libpng-dev
+        - imagemagick
 users_groups:
     install: '1'
     groups: {  }
