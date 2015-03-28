@@ -1,4 +1,4 @@
-sshadd = `ssh-add
+sshadd = `ssh-add`
 
 dir = File.dirname(File.expand_path(__FILE__))
 vagrant_home = (ENV['VAGRANT_HOME'].to_s.split.join.length > 0) ? ENV['VAGRANT_HOME'] : "#{ENV['HOME']}/.vagrant.d"
