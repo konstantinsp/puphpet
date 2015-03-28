@@ -3,3 +3,4 @@ puphpet/files/dot/ssh/*
 html/adminer
 myprojectname
 .npm
+npm-debug.log
