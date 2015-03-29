@@ -230,6 +230,8 @@ nodejs:
     npm_packages:
         - bower
         - gulp
+        - uglify-js
+        - uglifycss
 python:
     install: '1'
     packages: {  }
