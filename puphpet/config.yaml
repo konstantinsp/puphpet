@@ -1,20 +1,24 @@
----
-vagrantfile-local:
+vagrantfile:
+    target: local
     vm:
         box: puphpet/ubuntu1404-x64
         box_url: puphpet/ubuntu1404-x64
-        hostname: kunstmaancms
+        hostname: kunstmaan.cms
         memory: '1024'
         cpus: '2'
-        chosen_provider: virtualbox
+        chosen_provider: vmware_fusion
         network:
-            private_network: 172.31.32.2
-            forwarded_port: {  }
+            private_network: 192.168.57.101
+            forwarded_port:
+                vflnp_g4f3ok0h0sks:
+                    host: '9598'
+                    guest: '22'
         post_up_message: ''
         provider:
             virtualbox:
                 modifyvm:
-                    natdnshostresolver1: on
+                    natdnshostresolver1: 'on'
+                showgui: '0'
             vmware:
                 numvcpus: 1
             parallels:
@@ -29,12 +33,14 @@ vagrantfile-local:
                     - '--hiera_config /vagrant/puphpet/puppet/hiera.yaml'
                     - '--parser future'
         synced_folder:
-            eL3J29Pni02L:
-                owner: vagrant
-                group: vagrant
+            vflsf_9zwh1wqspkjj:
                 source: ./
                 target: /var/www
                 sync_type: nfs
+                smb:
+                    smb_host: ''
+                    smb_username: ''
+                    smb_password: ''
                 rsync:
                     args:
                         - '--verbose'
@@ -42,7 +48,10 @@ vagrantfile-local:
                         - '-z'
                     exclude:
                         - .vagrant/
-                    auto: 'false'
+                        - .git/
+                    auto: 'true'
+                owner: vagrant
+                group: vagrant
         usable_port_range:
             start: 10200
             stop: 10500
@@ -53,7 +62,7 @@ vagrantfile-local:
         username: vagrant
         guest_port: null
         keep_alive: true
-        forward_agent: false
+        forward_agent: true
         forward_x11: false
         shell: 'bash -l'
     vagrant:
@@ -70,12 +79,70 @@ users_groups:
     install: '1'
     groups: {  }
     users: {  }
-cron:
+locale:
     install: '1'
-    jobs: {  }
+    settings:
+        default_locale: en_US.UTF-8
+        locales:
+            - en_GB.UTF-8
+            - en_US.UTF-8
 firewall:
     install: '1'
     rules: {  }
+cron:
+    install: '1'
+    jobs: {  }
+nginx:
+    install: '0'
+    settings:
+        default_vhost: 1
+        proxy_buffer_size: 128k
+        proxy_buffers: '4 256k'
+    upstreams: {  }
+    vhosts:
+        nxv_zsisyk4sfsn5:
+            server_name: kunstmaan.cms
+            server_aliases:
+                - www.kunstmaan.cms
+            www_root: /var/www/kunstmaancms/web
+            listen_port: '80'
+            index_files:
+                - index.html
+                - index.htm
+                - index.php
+            client_max_body_size: 1m
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_port: '443'
+            ssl_protocols: ''
+            ssl_ciphers: ''
+            locations:
+                nxvl_xwml4p03n5y1:
+                    location: /
+                    autoindex: 'off'
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - index.php
+                    fastcgi: ''
+                    fastcgi_index: ''
+                    fastcgi_split_path: ''
+                nxvl_1c5zbpc79j8g:
+                    location: '~ \.php$'
+                    autoindex: 'off'
+                    try_files:
+                        - $uri
+                        - $uri/
+                        - index.php
+                        - /index.php$is_args$args
+                    fastcgi: '127.0.0.1:9000'
+                    fastcgi_index: index.php
+                    fastcgi_split_path: '^(.+\.php)(/.*)$'
+                    fast_cgi_params_extra:
+                        - 'SCRIPT_FILENAME $request_filename'
+                        - 'APP_ENV dev'
+    proxies: {  }
 apache:
     install: '1'
     settings:
@@ -89,7 +156,7 @@ apache:
         - proxy_fcgi
         - rewrite
     vhosts:
-        d2wndcy7blwm:
+        av_e75meizmm5ed:
             servername: kunstmaan.cms
             serveraliases:
                 - www.kunstmaan.cms
@@ -98,10 +165,16 @@ apache:
             setenv:
                 - 'APP_ENV dev'
             custom_fragment: ''
+            ssl: '0'
+            ssl_cert: ''
+            ssl_key: ''
+            ssl_chain: ''
+            ssl_certs_dir: ''
+            ssl_protocol: ''
+            ssl_cipher: ''
             directories:
-                tjrd7v5r6lwe:
-                    provider: directory
-                    path: /var/www/myprojectname/web
+                avd_6ajcoth6fv7f:
+                    path: /var/www/web
                     options:
                         - Indexes
                         - FollowSymlinks
@@ -112,69 +185,16 @@ apache:
                         - 'all granted'
                     custom_fragment: ''
                     files_match:
-                        lwnqdywkn3ry:
-                            provider: filesmatch
+                        avdfm_05nl0ididnz9:
                             path: \.php$
                             sethandler: 'proxy:fcgi://127.0.0.1:9000'
                             custom_fragment: ''
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_chain: ''
-            ssl_certs_dir: ''
-nginx:
-    install: '0'
-    settings:
-        default_vhost: 1
-        proxy_buffer_size: 128k
-        proxy_buffers: '4 256k'
-    upstreams: {  }
-    vhosts:
-        skvtmdhldzag:
-            proxy: ''
-            server_name: kunstmaan.cms
-            server_aliases:
-                - www.kunstmaan.cms
-            www_root: /var/www/kunstmaancms/web
-            listen_port: '80'
-            index_files:
-                - index.html
-                - index.htm
-                - index.php
-            client_max_body_size: 1m
-            locations:
-                kw4shvjztncn:
-                    location: /
-                    try_files:
-                        - $uri
-                        - $uri/
-                        - index.php
-                    fastcgi: ''
-                    fastcgi_index: ''
-                    fastcgi_split_path: ''
-                l5plg4wml3um:
-                    location: '~ \.php$'
-                    try_files:
-                        - $uri
-                        - $uri/
-                        - index.php
-                        - /index.php$is_args$args
-                    fastcgi: '127.0.0.1:9000'
-                    fastcgi_index: index.php
-                    fastcgi_split_path: '^(.+\.php)(/.*)$'
-                    fast_cgi_params_extra:
-                        - 'SCRIPT_FILENAME $request_filename'
-                        - 'APP_ENV dev'
-            ssl_cert: ''
-            ssl_key: ''
-            ssl_port: '443'
+                            provider: filesmatch
+                    provider: directory
 php:
     install: '1'
     settings:
         version: '56'
-    fpm_settings:
-        port: 9000
-    composer: '1'
-    composer_home: ''
     modules:
         php:
             - cli
@@ -189,22 +209,15 @@ php:
             - pecl_http
             - apcu
     ini:
-        display_errors: On
+        display_errors: 'On'
         error_reporting: '-1'
         session.save_path: /var/lib/php/session
         date.timezone: UTC
-hhvm:
-    install: '0'
-    nightly: 0
+    fpm_ini:
+        error_log: /var/log/php-fpm.log
+    fpm_pools: {  }
     composer: '1'
     composer_home: ''
-    settings:
-        host: 127.0.0.1
-        port: '9000'
-    ini:
-        display_errors: On
-        error_reporting: '-1'
-    timezone: null
 xdebug:
     install: '0'
     settings:
@@ -214,6 +227,20 @@ xdebug:
         xdebug.remote_enable: '1'
         xdebug.remote_handler: dbgp
         xdebug.remote_port: '9000'
+blackfire:
+    install: '0'
+    settings:
+        server_id: ''
+        server_token: ''
+        agent:
+            http_proxy: ''
+            https_proxy: ''
+            log_file: stderr
+            log_level: '1'
+        php:
+            agent_timeout: '0.25'
+            log_file: ''
+            log_level: '1'
 xhprof:
     install: '0'
 wpcli:
@@ -225,6 +252,10 @@ drush:
 ruby:
     install: '1'
     versions: {  }
+python:
+    install: '1'
+    packages: {  }
+    versions: {  }
 nodejs:
     install: '1'
     npm_packages:
@@ -232,10 +263,14 @@ nodejs:
         - gulp
         - uglify-js
         - uglifycss
-python:
-    install: '1'
-    packages: {  }
-    versions: {  }
+hhvm:
+    install: '0'
+    nightly: 0
+    composer: '1'
+    composer_home: ''
+    settings: {  }
+    server_ini: {  }
+    php_ini: {  }
 mysql:
     install: '1'
     settings:
@@ -244,16 +279,37 @@ mysql:
         override_options: {  }
     adminer: '1'
     users:
-        twJSaEBRDnG6:
+        mysqlnu_2t3dns6x7e1q:
             name: mydbuser
             password: mydbpass
     databases:
-        OzsfNR0ffckJ:
+        mysqlnd_75jniykcygrc:
             name: mydbname
             sql: ''
     grants:
-        rrzlYzgzF3OR:
+        mysqlng_f83eo3vunq6l:
             user: mydbuser
+            table: '*.*'
+            privileges:
+                - ALL
+mariadb:
+    install: '0'
+    settings:
+        version: '10.0'
+        root_password: '123'
+        override_options: {  }
+    adminer: 0
+    users:
+        mariadbnu_i9zu0eo8mmr4:
+            name: dbuser
+            password: '123'
+    databases:
+        mariadbnd_wofps0di5hau:
+            name: dbname
+            sql: ''
+    grants:
+        mariadbng_0sjdplyr6qpr:
+            user: dbuser
             table: '*.*'
             privileges:
                 - ALL
@@ -269,10 +325,6 @@ postgresql:
     users: {  }
     grants: {  }
     adminer: 0
-sqlite:
-    install: '0'
-    adminer: 0
-    databases: {  }
 mongodb:
     install: '0'
     settings:
@@ -284,6 +336,10 @@ redis:
     install: '0'
     settings:
         conf_port: '6379'
+sqlite:
+    install: '0'
+    adminer: 0
+    databases: {  }
 mailcatcher:
     install: '1'
     settings:
@@ -304,7 +360,6 @@ beanstalkd:
         binlogfsync: null
         binlogsize: '10485760'
     beanstalk_console: 0
-    binlogdir: /var/lib/beanstalkd/binlog
 rabbitmq:
     install: '0'
     settings:
