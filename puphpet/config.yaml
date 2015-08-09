@@ -174,7 +174,7 @@ apache:
             ssl_cipher: ''
             directories:
                 avd_6ajcoth6fv7f:
-                    path: /var/www/web
+                    path: /var/www/web/web
                     options:
                         - Indexes
                         - FollowSymlinks
