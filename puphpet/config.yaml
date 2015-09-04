@@ -6,7 +6,7 @@ vagrantfile:
         hostname: kunstmaan.cms
         memory: '1024'
         cpus: '2'
-        chosen_provider: vmware_fusion
+        chosen_provider: virtualbox
         network:
             private_network: 192.168.57.101
             forwarded_port:
